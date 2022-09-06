@@ -2,6 +2,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function App() {
   return (
@@ -41,13 +42,7 @@ function App() {
         <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
       </PopupWithForm>
 
-      <div className="popup popup_type_fs">
-        <figure className="popup__fullscreen">
-          <button className="popup__close-button" type="button"></button>
-          <img className="popup__image" />
-          <figcaption className="popup__caption"></figcaption>
-        </figure>
-      </div>
+      <ImagePopup />
 
       <template id="card-template">
         <li className="gallery__card">

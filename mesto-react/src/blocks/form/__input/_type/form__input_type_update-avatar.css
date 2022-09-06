@@ -1,0 +1,7 @@
+.form__input_type_update-avatar {
+    /* padding-bottom: 48px; */
+}
+
+.form__input_type_update-avatar:first-of-type {
+    margin-bottom: 0;
+}

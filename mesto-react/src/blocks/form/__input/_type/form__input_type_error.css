@@ -1,0 +1,8 @@
+/* стиль для невалидного поля */
+.form__input_type_error {
+    border-bottom: 1px solid #f00;
+}
+
+.form__input_type_error:focus {
+    border-bottom: 1px solid #f00;
+}

@@ -1,0 +1,4 @@
+/* сделать невидимым */
+.form__error_visible {
+    display: block;
+}

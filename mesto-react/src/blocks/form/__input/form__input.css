@@ -1,0 +1,22 @@
+.form__input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #00000020;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 33px;
+    padding: 0;
+}
+
+.form__input:first-of-type {
+    margin-bottom: 23px;
+}
+
+.form__input:focus {
+    outline: none;
+    border-bottom: 1px solid #00000020;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 33px;
+    padding: 0;
+}

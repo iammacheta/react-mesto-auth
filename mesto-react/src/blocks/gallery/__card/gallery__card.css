@@ -1,0 +1,7 @@
+.gallery__card {
+    position: relative;
+    list-style: none;
+    border-radius: 10px;
+    overflow: hidden;
+    line-height: 0;
+}

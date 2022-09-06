@@ -1,0 +1,26 @@
+.form__error {
+    display: none;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #f00;
+    position: absolute;
+}
+
+.form__error:nth-of-type(odd) {
+    top: 152px;
+}
+
+.form__error:nth-of-type(even) {
+    top: 210px;
+}
+
+@media screen and (min-width: 920px) {
+    .form__error:nth-of-type(odd) {
+        top: 145px;
+    }
+
+    .form__error:nth-of-type(even) {
+        top: 202px;
+    }
+}

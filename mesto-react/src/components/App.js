@@ -25,6 +25,13 @@ function App() {
     setIsEditAvatarPopupOpen(true)
   }
 
+  // Обработчик закрытия всех попапов
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsEditAvatarPopupOpen(false)
+  }
+
   return (
     <div className="App">
       <Header />
@@ -39,6 +46,7 @@ function App() {
         name="edit-profile"
         title="Редактировать профиль"
         isOpen={isEditProfilePopupOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
+        onClose={closeAllPopups} //коблек для закрытия всех попапов
       >
         <input className="form__input form__input_type_name" type="text" placeholder="Имя" name="name"
           value="" required minLength="2" maxLength="40" />
@@ -53,6 +61,7 @@ function App() {
         name="add-card"
         title="Новое место"
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
       >
         <input className="form__input form__input_type_card-name" type="text" name="name" placeholder="Название"
           required minLength="2" maxLength="30" />
@@ -67,6 +76,7 @@ function App() {
         name="update-avatar"
         title="Обновить аватар"
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       >
         <input className="form__input form__input_type_update-avatar" type="url" name="link"
           placeholder="Ссылка на картинку" required />
@@ -77,6 +87,7 @@ function App() {
       <PopupWithForm
         name="delete-confirm"
         title="Вы уверены?"
+        onClose={closeAllPopups}
       >
         <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
       </PopupWithForm>

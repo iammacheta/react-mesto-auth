@@ -32,8 +32,15 @@ function App() {
     setIsEditAvatarPopupOpen(false)
   }
 
+  // логика закрытия попапа клавишей Esc
+  function handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      closeAllPopups()
+    }
+  }
+
   return (
-    <div className="App">
+    <div className="App" onKeyUp={handleEscClose}>
       <Header />
       <Main
         onEditProfile={handleEditProfileClick}

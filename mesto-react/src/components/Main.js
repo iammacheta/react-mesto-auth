@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { api } from "../utils/api"
+import Card from "./Card"
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
 
@@ -56,21 +57,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
                     // итерация по массиву с карточками, вставляем данные из ответа в разметку и возвращаем разметку
                     cards.map(cardElement => {
                         return (
-                            // шаблон разметки карточки
-                            <li className="gallery__card" key={cardElement._id}>
-                                <button className="gallery__delete" type="button"></button>
-                                <img className="gallery__image" src={`${cardElement.link}`} />
-                                <div className="gallery__caption">
-                                    <h2 className="gallery__text">{cardElement.name}</h2>
-                                    <div className="gallery__likes">
-                                        <button className="gallery__like" type="button"></button>
-                                        <span className="gallery__likes-amount">{cardElement.likes.length}</span>
-                                    </div>
-                                </div>
-                            </li>
+                            <Card card={cardElement} key={cardElement._id} /> // ключ обязательно требуется для повторяемого объекта
                         )
                     })
-                }</ul>
+                }
+                </ul>
             </section>
         </main>
     )

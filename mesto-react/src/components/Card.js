@@ -1,8 +1,12 @@
-export default function Card({ card, onCardClick } ) {
+import Main from "./Main";
+
+export default function Card({ card, onCardClick }) {
     // компонент получает в качестве пропса текущий элемент итерируемого массива
     // и возвращает разметку карточки с подставленными данными
 
-    function handleClick() { 
+
+    // Колбек, пробрасывает card в Main, а оттуда в Арр
+    function handleClick() {
         onCardClick(card);
     }
 

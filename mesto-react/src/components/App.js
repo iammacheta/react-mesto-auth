@@ -44,6 +44,7 @@ function App() {
     }
   }
 
+  // Колбек для открытия карточки в фулскрин
   function handleCardClick(card) {
     setSelectedCard(card)
 
@@ -56,7 +57,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
-        handleCardClick={handleCardClick}
+        onCardClickCallback={handleCardClick}
 
       />
       <Footer />

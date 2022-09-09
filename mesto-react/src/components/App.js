@@ -100,22 +100,6 @@ function App() {
       </PopupWithForm>
 
       <ImagePopup />
-
-      <template id="card-template">
-        <li className="gallery__card">
-          <button className="gallery__delete" type="button"></button>
-          <img className="gallery__image" />
-          <div className="gallery__caption">
-            <h2 className="gallery__text"></h2>
-            <div className="gallery__likes">
-              <button className="gallery__like" type="button"></button>
-              <span className="gallery__likes-amount">0</span>
-            </div>
-
-          </div>
-        </li>
-      </template>
-
     </div>
   )
 }

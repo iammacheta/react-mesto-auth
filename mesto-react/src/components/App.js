@@ -3,14 +3,17 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import React from 'react';
+import { useState } from 'react';
 
 function App() {
 
   // Переменные состояния, отвечающие за видимость попапов
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+
+  // Переменная состояния для выбраной карточки
+  const [selectedCard, setSelectedCard] = useState('')
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -30,6 +33,8 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+
+    setSelectedCard('')
   }
 
   // логика закрытия попапа клавишей Esc
@@ -39,6 +44,11 @@ function App() {
     }
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card)
+
+  }
+
   return (
     <div className="App" onKeyUp={handleEscClose}>
       <Header />
@@ -46,6 +56,8 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        handleCardClick={handleCardClick}
+
       />
       <Footer />
       {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
@@ -99,7 +111,10 @@ function App() {
         <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
       </PopupWithForm>
 
-      <ImagePopup />
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+      />
     </div>
   )
 }

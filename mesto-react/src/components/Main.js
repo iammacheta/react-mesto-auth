@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { api } from "../utils/api"
 import Card from "./Card"
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, handleCardClick }) {
 
     // переменные состояния для данных профиля
     const [userName, setUserName] = useState('')
@@ -57,7 +57,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
                     // итерация по массиву с карточками, вставляем данные из ответа в разметку и возвращаем разметку
                     cards.map(cardElement => {
                         return (
-                            <Card card={cardElement} key={cardElement._id} /> // ключ обязательно требуется для повторяемого объекта
+                            <Card card={cardElement} key={cardElement._id} onCardClick={handleCardClick} /> // ключ обязательно требуется для повторяемого объекта
                         )
                     })
                 }

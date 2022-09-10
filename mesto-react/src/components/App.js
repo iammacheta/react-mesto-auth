@@ -37,13 +37,6 @@ function App() {
     setSelectedCard('')
   }
 
-  // логика закрытия попапа клавишей Esc
-  function handleEscClose(evt) {
-    if (evt.key === 'Escape') {
-      closeAllPopups()
-    }
-  }
-
   // Колбек для открытия карточки в фулскрин
   function handleCardClick(card) {
     setSelectedCard(card)
@@ -51,7 +44,7 @@ function App() {
   }
 
   return (
-    <div className="App" onKeyUp={handleEscClose}>
+    <div className="App">
       <Header />
       <Main
         onEditProfile={handleEditProfileClick}
@@ -69,10 +62,10 @@ function App() {
         onClose={closeAllPopups} //коблек для закрытия всех попапов
       >
         <input className="form__input form__input_type_name" type="text" placeholder="Имя" name="name"
-          value="" required minLength="2" maxLength="40" />
+           required minLength="2" maxLength="40" />
         <span className="form__error name-error"></span>
         <input className="form__input form__input_type_job" type="text" placeholder="Вид деятельности" name="job"
-          value="" required minLength="2" maxLength="200" />
+           required minLength="2" maxLength="200" />
         <span className="form__error job-error"></span>
         <button className="form__submit" type="submit">Сохранить</button>
       </PopupWithForm>

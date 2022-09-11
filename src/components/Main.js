@@ -44,14 +44,17 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
     return (
         <main>
             <section className="profile">
-                <div className="profile__image" onClick={onEditAvatar} style={{ backgroundImage: `url(${userAvatar})` }}></div>
+                <div
+                    className="profile__image"
+                    onClick={onEditAvatar}
+                    style={{ backgroundImage: `url(${userAvatar})` }}>
+                </div>
                 <div className="profile__name-container">
                     <h1 className="profile__name">{userName}</h1>
-                    <button className="profile__edit-button" type="button" onClick={onEditProfile}></button>
+                    <button className="profile__edit-button" type="button" onClick={onEditProfile} />
                     <p className="profile__job">{userDescription}</p>
                 </div>
-                <button className="profile__add-button" type="button" onClick={onAddPlace}></button>
-                debugger
+                <button className="profile__add-button" type="button" onClick={onAddPlace} />
             </section>
             <section>
                 <ul className="gallery">{

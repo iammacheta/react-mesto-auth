@@ -23,4 +23,4 @@
 
 
 **GH-Pages**
-https://iammacheta.github.io/mesto/
+https://iammacheta.github.io/mesto-react/

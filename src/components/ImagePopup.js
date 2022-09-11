@@ -1,6 +1,11 @@
 function ImagePopup({ card, onClose }) {
+
+    function isNotEmpty(obj) {
+        return Object.keys(obj).length !== 0;
+    }
+
     return (
-        <div className={`popup popup_type_fs ${card && 'popup_opend'}`} >
+        <div className={`popup popup_type_fs ${(isNotEmpty(card)) && 'popup_opend'}`} >
             <figure className="popup__fullscreen">
                 <button className="popup__close-button" type="button" onClick={onClose}></button>
                 <img className="popup__image" src={`${card.link}`} />
@@ -8,6 +13,7 @@ function ImagePopup({ card, onClose }) {
             </figure>
         </div >
     )
+
 }
 
 export default ImagePopup

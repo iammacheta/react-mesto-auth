@@ -13,7 +13,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
 
   // Переменная состояния для выбраной карточки
-  const [selectedCard, setSelectedCard] = useState('')
+  const [selectedCard, setSelectedCard] = useState({})
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -62,10 +62,10 @@ function App() {
         onClose={closeAllPopups} //коблек для закрытия всех попапов
       >
         <input className="form__input form__input_type_name" type="text" placeholder="Имя" name="name"
-           required minLength="2" maxLength="40" />
+          required minLength="2" maxLength="40" />
         <span className="form__error name-error"></span>
         <input className="form__input form__input_type_job" type="text" placeholder="Вид деятельности" name="job"
-           required minLength="2" maxLength="200" />
+          required minLength="2" maxLength="200" />
         <span className="form__error job-error"></span>
         <button className="form__submit" type="submit">Сохранить</button>
       </PopupWithForm>

@@ -8,7 +8,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
     // переменные состояния для данных профиля
     const [userName, setUserName] = useState('')
     const [userDescription, setUserDescription] = useState('')
-    const [userAvatar, setUserAvatar] = useState()
+    const [userAvatar, setUserAvatar] = useState('')
 
     // переменная состояния для карточек
     const [cards, setCards] = useState([])

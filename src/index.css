@@ -12,6 +12,7 @@
 @import url(./blocks/gallery/gallery.css);
 @import url(./blocks/gallery/__card/gallery__card.css);
 @import url(./blocks/gallery/__delete/gallery__delete.css);
+@import url(./blocks/gallery/__delete/_hidden/gallery__delete_hidden.css);
 @import url(./blocks/gallery/__image/gallery__image.css);
 @import url(./blocks/gallery/__caption/gallery__caption.css);
 @import url(./blocks/gallery/__text/gallery__text.css);

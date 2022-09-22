@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { api } from "../utils/api"
 import Card from "./Card"
+import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) {
     // onCardClickCallback - нужен для проброса card из Cards в Арр 
 
-    // переменные состояния для данных профиля
-    const [userName, setUserName] = useState('')
-    const [userDescription, setUserDescription] = useState('')
-    const [userAvatar, setUserAvatar] = useState('')
+    const currentUser = useContext(CurrentUserContext)
 
     // переменная состояния для карточек
     const [cards, setCards] = useState([])
 
-    // эффект, вызываемый при монтировании компонента
-    // будет совершать запрос в API за пользовательскими данными
-    useEffect(() => {
-        api.getProfileInfo()
-            .then((res) => {
-                // После получения ответа задаем полученные данные в соответствующие переменные состояния
-                setUserName(res.name)
-                setUserDescription(res.about)
-                setUserAvatar(res.avatar)
-            })
-            .catch((err) => {
-                console.log(err) // выведем ошибку в консоль
-            })
-    }, [])
 
     // запрашиваем начальные карточки
     useEffect(() => {
@@ -47,12 +31,12 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
                 <div
                     className="profile__image"
                     onClick={onEditAvatar}
-                    style={{ backgroundImage: `url(${userAvatar})` }}>
+                    style={{ backgroundImage: `url(${currentUser.avatar})` }}>
                 </div>
                 <div className="profile__name-container">
-                    <h1 className="profile__name">{userName}</h1>
+                    <h1 className="profile__name">{currentUser.name}</h1>
                     <button className="profile__edit-button" type="button" onClick={onEditProfile} />
-                    <p className="profile__job">{userDescription}</p>
+                    <p className="profile__job">{currentUser.about}</p>
                 </div>
                 <button className="profile__add-button" type="button" onClick={onAddPlace} />
             </section>

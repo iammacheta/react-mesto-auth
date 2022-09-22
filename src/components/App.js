@@ -3,7 +3,9 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { api } from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
 
@@ -14,6 +16,9 @@ function App() {
 
   // Переменная состояния для выбраной карточки
   const [selectedCard, setSelectedCard] = useState({})
+
+  // Переменная состояния для данных пользователя
+  const [currentUser, setCurrentUser] = useState({})
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -43,104 +48,119 @@ function App() {
 
   }
 
+  // эффект, вызываемый при монтировании компонента
+  // будет совершать запрос в API за пользовательскими данными
+  useEffect(() => {
+    api.getProfileInfo()
+      .then((res) => {
+        // После получения ответа задаем полученные данные в соответствующие переменные состояния
+        setCurrentUser(res)
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+  }, [])
+
   return (
-    <div className="App">
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClickCallback={handleCardClick}
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        <Header />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onCardClickCallback={handleCardClick}
 
-      />
-      <Footer />
-      {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
-      <PopupWithForm
-        name="edit-profile"
-        title="Редактировать профиль"
-        isOpen={isEditProfilePopupOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
-        onClose={closeAllPopups} //коблек для закрытия всех попапов
-      >
-        <input
-          className="form__input form__input_type_name"
-          type="text"
-          placeholder="Имя"
-          name="name"
-          required
-          minLength="2"
-          maxLength="40"
         />
-        <span className="form__error name-error"></span>
-        <input
-          className="form__input form__input_type_job"
-          type="text"
-          placeholder="Вид деятельности"
-          name="job"
-          required
-          minLength="2"
-          maxLength="200"
-        />
-        <span className="form__error job-error"></span>
-        <button className="form__submit" type="submit">Сохранить</button>
-      </PopupWithForm>
+        <Footer />
+        {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
+        <PopupWithForm
+          name="edit-profile"
+          title="Редактировать профиль"
+          isOpen={isEditProfilePopupOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
+          onClose={closeAllPopups} //коблек для закрытия всех попапов
+        >
+          <input
+            className="form__input form__input_type_name"
+            type="text"
+            placeholder="Имя"
+            name="name"
+            required
+            minLength="2"
+            maxLength="40"
+          />
+          <span className="form__error name-error"></span>
+          <input
+            className="form__input form__input_type_job"
+            type="text"
+            placeholder="Вид деятельности"
+            name="job"
+            required
+            minLength="2"
+            maxLength="200"
+          />
+          <span className="form__error job-error"></span>
+          <button className="form__submit" type="submit">Сохранить</button>
+        </PopupWithForm>
 
-      <PopupWithForm
-        name="add-card"
-        title="Новое место"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input
-          className="form__input form__input_type_card-name"
-          type="text"
-          name="name"
-          placeholder="Название"
-          required
-          minLength="2"
-          maxLength="30"
-        />
-        <span className="form__error name-error"></span>
-        <input
-          className="form__input form__input_type_card-url"
-          type="url"
-          name="link"
-          placeholder="Ссылка на картинку"
-          required
-        />
-        <span className="form__error link-error"></span>
-        <button className="form__submit" type="submit">Создать</button>
-      </PopupWithForm>
+        <PopupWithForm
+          name="add-card"
+          title="Новое место"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input
+            className="form__input form__input_type_card-name"
+            type="text"
+            name="name"
+            placeholder="Название"
+            required
+            minLength="2"
+            maxLength="30"
+          />
+          <span className="form__error name-error"></span>
+          <input
+            className="form__input form__input_type_card-url"
+            type="url"
+            name="link"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span className="form__error link-error"></span>
+          <button className="form__submit" type="submit">Создать</button>
+        </PopupWithForm>
 
-      <PopupWithForm
-        name="update-avatar"
-        title="Обновить аватар"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input
-          className="form__input form__input_type_update-avatar"
-          type="url"
-          name="link"
-          placeholder="Ссылка на картинку"
-          required
+        <PopupWithForm
+          name="update-avatar"
+          title="Обновить аватар"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input
+            className="form__input form__input_type_update-avatar"
+            type="url"
+            name="link"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span className="form__error link-error"></span>
+          <button className="form__submit" type="submit">Сохранить</button>
+        </PopupWithForm>
+
+        <PopupWithForm
+          name="delete-confirm"
+          title="Вы уверены?"
+          onClose={closeAllPopups}
+        >
+          <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
+        </PopupWithForm>
+
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
         />
-        <span className="form__error link-error"></span>
-        <button className="form__submit" type="submit">Сохранить</button>
-      </PopupWithForm>
-
-      <PopupWithForm
-        name="delete-confirm"
-        title="Вы уверены?"
-        onClose={closeAllPopups}
-      >
-        <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
-      </PopupWithForm>
-
-      <ImagePopup
-        card={selectedCard}
-        onClose={closeAllPopups}
-      />
-    </div>
+      </div>
+    </CurrentUserContext.Provider>
   )
 }
 

@@ -24,6 +24,34 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
             })
     }, [])
 
+    // обработчик нажатия лайка
+    function handleCardLike(card) {
+        // Снова проверяем, есть ли уже лайк на этой карточке
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+        // Отправляем запрос в API и получаем обновлённые данные карточки
+        api.changeLikeCardStatus({ cardID: card._id, isLiked: isLiked })
+            .then(
+                (newCard) => {
+                    setCards(
+                        // создаем копию массива, заменив в нем измененную карточку
+                        cards.map(
+                            (cardElement) => cardElement._id === card._id ? newCard : cardElement
+                        )
+                    );
+                });
+    }
+
+    // обработчик удаления карточки
+    function handleCardDelete(card) {
+        api.deleteCardFromServer({ cardID: card._id })
+            .then(() => {
+                setCards(
+                    // создаем копию массива, исключив из него удалённую карточку
+                    cards.filter(cardElement => cardElement._id !== card._id)
+                )
+            })
+    }
 
     return (
         <main>
@@ -45,7 +73,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
                     // итерация по массиву с карточками, вставляем данные из ответа в разметку и возвращаем разметку
                     cards.map(cardElement => {
                         return (
-                            <Card card={cardElement} key={cardElement._id} onCardClick={onCardClickCallback} /> // ключ обязательно требуется для повторяемого объекта
+                            <Card card={cardElement} key={cardElement._id} onCardClick={onCardClickCallback} onCardLike={handleCardLike} onCardDelete={handleCardDelete} /> // ключ обязательно требуется для повторяемого объекта
                         )
                     })
                 }

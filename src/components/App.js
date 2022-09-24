@@ -19,7 +19,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({})
 
   // Переменная состояния для данных пользователя
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState({name: '', about: ''})
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {

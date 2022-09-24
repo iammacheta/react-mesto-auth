@@ -6,6 +6,7 @@ import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
 
@@ -74,34 +75,8 @@ function App() {
         />
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
-        <PopupWithForm
-          name="edit-profile"
-          title="Редактировать профиль"
-          isOpen={isEditProfilePopupOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
-          onClose={closeAllPopups} //коблек для закрытия всех попапов
-        >
-          <input
-            className="form__input form__input_type_name"
-            type="text"
-            placeholder="Имя"
-            name="name"
-            required
-            minLength="2"
-            maxLength="40"
-          />
-          <span className="form__error name-error"></span>
-          <input
-            className="form__input form__input_type_job"
-            type="text"
-            placeholder="Вид деятельности"
-            name="job"
-            required
-            minLength="2"
-            maxLength="200"
-          />
-          <span className="form__error job-error"></span>
-          <button className="form__submit" type="submit">Сохранить</button>
-        </PopupWithForm>
+
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm
           name="add-card"

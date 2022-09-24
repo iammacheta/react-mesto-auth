@@ -53,6 +53,8 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
             })
     }
 
+    
+
     return (
         <main>
             <section className="profile">
@@ -83,4 +85,4 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
     )
 }
 
-export default Main 
+export default Main  

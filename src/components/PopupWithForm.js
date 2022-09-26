@@ -15,4 +15,4 @@ function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children }) {
     )
 }
 
-export default PopupWithForm 
+export default PopupWithForm  

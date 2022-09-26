@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({})
 
   // Переменная состояния для данных пользователя
-  const [currentUser, setCurrentUser] = useState({ name: '', about: '' })
+  const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' })
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -52,7 +53,21 @@ function App() {
   function handleUpdateUser({ name, about }) {
     api.updateProfileInfo({ name: name, about: about })
       .then((res) => {
-        setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
+        // setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
+        setCurrentUser(res)
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+      .finally(() => {
+        closeAllPopups()
+      })
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api.updateAvatar({ avatarLink: avatar })
+      .then((res) => {
+        setCurrentUser(res)
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
@@ -91,6 +106,8 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+
         <PopupWithForm
           name="add-card"
           title="Новое место"
@@ -116,23 +133,6 @@ function App() {
           />
           <span className="form__error link-error"></span>
           <button className="form__submit" type="submit">Создать</button>
-        </PopupWithForm>
-
-        <PopupWithForm
-          name="update-avatar"
-          title="Обновить аватар"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            className="form__input form__input_type_update-avatar"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__error link-error"></span>
-          <button className="form__submit" type="submit">Сохранить</button>
         </PopupWithForm>
 
         <PopupWithForm

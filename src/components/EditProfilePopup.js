@@ -76,4 +76,4 @@ export default function EditProfilePopup(props) {
             <button className="form__submit" type="submit">Сохранить</button>
         </PopupWithForm>
     )
-}
+} 

@@ -19,7 +19,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({})
 
   // Переменная состояния для данных пользователя
-  const [currentUser, setCurrentUser] = useState({name: '', about: ''})
+  const [currentUser, setCurrentUser] = useState({ name: '', about: '' })
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -49,6 +49,19 @@ function App() {
 
   }
 
+  function handleUpdateUser({ name, about }) {
+    api.updateProfileInfo({ name: name, about: about })
+      .then((res) => {
+        setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+      .finally(() => {
+        closeAllPopups()
+      })
+  }
+
   // эффект, вызываемый при монтировании компонента
   // будет совершать запрос в API за пользовательскими данными
   useEffect(() => {
@@ -76,7 +89,7 @@ function App() {
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
         <PopupWithForm
           name="add-card"

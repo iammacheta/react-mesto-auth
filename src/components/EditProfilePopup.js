@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm"
 
-export default function EditProfilePopup({ isOpen, onClose }) {
+export default function EditProfilePopup(props) {
 
     // Подписка на контекст
     const currentUser = useContext(CurrentUserContext)
@@ -27,12 +27,27 @@ export default function EditProfilePopup({ isOpen, onClose }) {
         setDescription(e.target.value)
     }
 
+    // мы не можем делать запрос в API прямо в этом обработчике, 
+    // потому что после его завершения нужно обновить переменную состояния currentUser, 
+    // которая находится ещё выше — в компоненте App
+    function handleSubmit(e) {
+        // Запрещаем браузеру переходить по адресу формы
+        e.preventDefault();
+
+        // Передаём значения управляемых компонентов во внешний обработчик
+        props.onUpdateUser({
+            name: name,
+            about: description,
+        });
+    }
+
     return (
         <PopupWithForm
             name="edit-profile"
             title="Редактировать профиль"
-            isOpen={isOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
-            onClose={onClose} //коблек для закрытия всех попапов
+            isOpen={props.isOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
+            onClose={props.onClose} //коблек для закрытия всех попапов
+            onSubmit={handleSubmit}
         >
             <input
                 className="form__input form__input_type_name"

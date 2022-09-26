@@ -11,7 +11,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
     // переменная состояния для карточек
     const [cards, setCards] = useState([])
 
-
     // запрашиваем начальные карточки
     useEffect(() => {
         api.getInitialCards()
@@ -52,8 +51,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
                 )
             })
     }
-
-    
 
     return (
         <main>

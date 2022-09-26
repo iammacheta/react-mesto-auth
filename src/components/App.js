@@ -8,6 +8,7 @@ import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
 
@@ -109,6 +110,21 @@ function App() {
       })
   }
 
+  // обработчик добавления карточки
+  function handleAddPlaceSubmit({ name, url }) {
+    api.addNewCard({ name: name, url: url })
+      .then((res) => {
+        // обновляем стейт cards с помощью расширенной копии текущего массива
+        setCards([res, ...cards])
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+      .finally(() => {
+        closeAllPopups()
+      })
+  }
+
   // эффект, вызываемый при монтировании компонента
   // будет совершать запрос в API за пользовательскими данными
   useEffect(() => {
@@ -154,32 +170,7 @@ function App() {
 
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-        <PopupWithForm
-          name="add-card"
-          title="Новое место"
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            className="form__input form__input_type_card-name"
-            type="text"
-            name="name"
-            placeholder="Название"
-            required
-            minLength="2"
-            maxLength="30"
-          />
-          <span className="form__error name-error"></span>
-          <input
-            className="form__input form__input_type_card-url"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__error link-error"></span>
-          <button className="form__submit" type="submit">Создать</button>
-        </PopupWithForm>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
         <PopupWithForm
           name="delete-confirm"

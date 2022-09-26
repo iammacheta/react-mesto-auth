@@ -22,6 +22,9 @@ function App() {
   // Переменная состояния для данных пользователя
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' })
 
+  // переменная состояния для карточек
+  const [cards, setCards] = useState([])
+
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -77,6 +80,35 @@ function App() {
       })
   }
 
+  // обработчик нажатия лайка
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus({ cardID: card._id, isLiked: isLiked })
+      .then(
+        (newCard) => {
+          setCards(
+            // создаем копию массива, заменив в нем измененную карточку
+            cards.map(
+              (cardElement) => cardElement._id === card._id ? newCard : cardElement
+            )
+          );
+        });
+  }
+
+  // обработчик удаления карточки
+  function handleCardDelete(card) {
+    api.deleteCardFromServer({ cardID: card._id })
+      .then(() => {
+        setCards(
+          // создаем копию массива, исключив из него удалённую карточку
+          cards.filter(cardElement => cardElement._id !== card._id)
+        )
+      })
+  }
+
   // эффект, вызываемый при монтировании компонента
   // будет совершать запрос в API за пользовательскими данными
   useEffect(() => {
@@ -84,6 +116,18 @@ function App() {
       .then((res) => {
         // После получения ответа задаем полученные данные в соответствующие переменные состояния
         setCurrentUser(res)
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+  }, [])
+
+  // запрашиваем начальные карточки
+  useEffect(() => {
+    api.getInitialCards()
+      .then((res) => {
+        // передаем карточки в переменную состояни
+        setCards(res)
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
@@ -99,7 +143,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClickCallback={handleCardClick}
-
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
@@ -152,4 +198,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

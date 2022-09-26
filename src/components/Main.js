@@ -3,54 +3,10 @@ import { api } from "../utils/api"
 import Card from "./Card"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback, cards, onCardLike, onCardDelete }) {
     // onCardClickCallback - нужен для проброса card из Cards в Арр 
 
     const currentUser = useContext(CurrentUserContext)
-
-    // переменная состояния для карточек
-    const [cards, setCards] = useState([])
-
-    // запрашиваем начальные карточки
-    useEffect(() => {
-        api.getInitialCards()
-            .then((res) => {
-                // передаем карточки в переменную состояни
-                setCards(res)
-            })
-            .catch((err) => {
-                console.log(err) // выведем ошибку в консоль
-            })
-    }, [])
-
-    // обработчик нажатия лайка
-    function handleCardLike(card) {
-        // Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-        // Отправляем запрос в API и получаем обновлённые данные карточки
-        api.changeLikeCardStatus({ cardID: card._id, isLiked: isLiked })
-            .then(
-                (newCard) => {
-                    setCards(
-                        // создаем копию массива, заменив в нем измененную карточку
-                        cards.map(
-                            (cardElement) => cardElement._id === card._id ? newCard : cardElement
-                        )
-                    );
-                });
-    }
-
-    // обработчик удаления карточки
-    function handleCardDelete(card) {
-        api.deleteCardFromServer({ cardID: card._id })
-            .then(() => {
-                setCards(
-                    // создаем копию массива, исключив из него удалённую карточку
-                    cards.filter(cardElement => cardElement._id !== card._id)
-                )
-            })
-    }
 
     return (
         <main>
@@ -72,7 +28,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
                     // итерация по массиву с карточками, вставляем данные из ответа в разметку и возвращаем разметку
                     cards.map(cardElement => {
                         return (
-                            <Card card={cardElement} key={cardElement._id} onCardClick={onCardClickCallback} onCardLike={handleCardLike} onCardDelete={handleCardDelete} /> // ключ обязательно требуется для повторяемого объекта
+                            <Card card={cardElement} key={cardElement._id} onCardClick={onCardClickCallback} onCardLike={onCardLike} onCardDelete={onCardDelete} /> // ключ обязательно требуется для повторяемого объекта
                         )
                     })
                 }
@@ -82,4 +38,4 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback }) 
     )
 }
 
-export default Main  
+export default Main

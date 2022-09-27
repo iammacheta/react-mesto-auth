@@ -53,7 +53,7 @@ export default function AddPlacePopup(props) {
                 onChange={handleChangeLink}
             />
             <span className="form__error link-error"></span>
-            <button className="form__submit" type="submit">Создать</button>
+            <button className="form__submit" type="submit">{props.placeButtonText}</button>
         </PopupWithForm>
     )
 }

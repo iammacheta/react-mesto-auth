@@ -27,7 +27,14 @@ function App() {
   // переменная состояния для карточек
   const [cards, setCards] = useState([])
 
+  //переменная состояния для удаляемой карточки
   const [cardToDelete, setCardToDelete] = useState({})
+
+  // переменные состояния, отвечающие за текст кнопок в формах
+  const [avatarButtonText, setAvatarButtonText] = useState('Сохранить')
+  const [profileButtonText, setProfileButtonText] = useState('Сохранить')
+  const [placeButtonText, setPlaceButtonText] = useState('Создать')
+  const [deleteConfirmButtonText, setDeleteConfirmButtonText] = useState('Да')
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -65,6 +72,7 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
+    setProfileButtonText('Сохранение...')
     api.updateProfileInfo({ name: name, about: about })
       .then((res) => {
         // setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
@@ -75,10 +83,12 @@ function App() {
       })
       .finally(() => {
         closeAllPopups()
+        setProfileButtonText('Сохранить')
       })
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setAvatarButtonText('Сохранение...')
     api.updateAvatar({ avatarLink: avatar })
       .then((res) => {
         setCurrentUser(res)
@@ -88,6 +98,7 @@ function App() {
       })
       .finally(() => {
         closeAllPopups()
+        setAvatarButtonText('Сохранить')
       })
   }
 
@@ -114,6 +125,7 @@ function App() {
 
   // обработчик удаления карточки
   function handleCardDelete(cardToDelete) {
+    setDeleteConfirmButtonText('Удаление...')
     api.deleteCardFromServer({ cardID: cardToDelete._id })
       .then(() => {
         setCards(
@@ -126,11 +138,13 @@ function App() {
       })
       .finally(() => {
         closeAllPopups()
+        setDeleteConfirmButtonText('Да')
       })
   }
 
   // обработчик добавления карточки
   function handleAddPlaceSubmit({ name, url }) {
+    setPlaceButtonText('Сохранение...')
     api.addNewCard({ name: name, url: url })
       .then((res) => {
         // обновляем стейт cards с помощью расширенной копии текущего массива
@@ -141,6 +155,7 @@ function App() {
       })
       .finally(() => {
         closeAllPopups()
+        setPlaceButtonText('Создать')
       })
   }
 
@@ -185,10 +200,10 @@ function App() {
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-        <DeleteConfirmPopup isOpen={isDeleteConfirmPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} cardToDelete={cardToDelete} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} profileButtonText={profileButtonText} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} avatarButtonText={avatarButtonText} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} placeButtonText={placeButtonText} />
+        <DeleteConfirmPopup isOpen={isDeleteConfirmPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} cardToDelete={cardToDelete} deleteConfirmButtonText={deleteConfirmButtonText} />
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}

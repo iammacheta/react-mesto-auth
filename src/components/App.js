@@ -140,9 +140,9 @@ function App() {
   }
 
   // обработчик добавления карточки
-  function handleAddPlaceSubmit({ name, url }) {
+  function handleAddPlaceSubmit(cardInfo) {
     setIsLoading(true)
-    api.addNewCard({ name: name, url: url })
+    api.addNewCard(cardInfo)
       .then((res) => {
         // обновляем стейт cards с помощью расширенной копии текущего массива
         setCards([res, ...cards])

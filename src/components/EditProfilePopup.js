@@ -60,7 +60,7 @@ export default function EditProfilePopup(props) {
                 onChange={handleChangeName}
                 value={name}
             />
-            <span className="form__error name-error"></span>
+            <span className="form__error name-error" />
             <input
                 className="form__input form__input_type_job"
                 type="text"
@@ -72,7 +72,7 @@ export default function EditProfilePopup(props) {
                 onChange={handleChangeDescription}
                 value={description}
             />
-            <span className="form__error job-error"></span>
+            <span className="form__error job-error" />
             <button className="form__submit"
                 type="submit">
                 {props.isLoading ? 'Сохранение...' : 'Сохранить'}

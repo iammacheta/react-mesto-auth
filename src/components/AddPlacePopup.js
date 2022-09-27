@@ -48,7 +48,7 @@ export default function AddPlacePopup(props) {
                 value={name}
                 onChange={handleChangeName}
             />
-            <span className="form__error name-error"></span>
+            <span className="form__error name-error" />
             <input
                 className="form__input form__input_type_card-url"
                 type="url"
@@ -58,7 +58,7 @@ export default function AddPlacePopup(props) {
                 value={link}
                 onChange={handleChangeLink}
             />
-            <span className="form__error link-error"></span>
+            <span className="form__error link-error" />
             <button
                 className="form__submit" type="submit">
                 {props.isLoading ? 'Сохранение...' : 'Создать'}

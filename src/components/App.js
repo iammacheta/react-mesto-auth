@@ -30,11 +30,8 @@ function App() {
   //переменная состояния для удаляемой карточки
   const [cardToDelete, setCardToDelete] = useState({})
 
-  // переменные состояния, отвечающие за текст кнопок в формах
-  const [avatarButtonText, setAvatarButtonText] = useState('Сохранить')
-  const [profileButtonText, setProfileButtonText] = useState('Сохранить')
-  const [placeButtonText, setPlaceButtonText] = useState('Создать')
-  const [deleteConfirmButtonText, setDeleteConfirmButtonText] = useState('Да')
+  // переменная состояния, отвечающая за текст кнопок в формах
+  const [isLoading, setIsLoading] = useState(false)
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -72,7 +69,7 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
-    setProfileButtonText('Сохранение...')
+    setIsLoading(true)
     api.updateProfileInfo({ name: name, about: about })
       .then((res) => {
         // setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
@@ -83,12 +80,12 @@ function App() {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        setProfileButtonText('Сохранить')
+        setIsLoading(false)
       })
   }
 
   function handleUpdateAvatar({ avatar }) {
-    setAvatarButtonText('Сохранение...')
+    setIsLoading(true)
     api.updateAvatar({ avatarLink: avatar })
       .then((res) => {
         setCurrentUser(res)
@@ -98,7 +95,7 @@ function App() {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        setAvatarButtonText('Сохранить')
+        setIsLoading(false)
       })
   }
 
@@ -125,26 +122,26 @@ function App() {
 
   // обработчик удаления карточки
   function handleCardDelete(cardToDelete) {
-    setDeleteConfirmButtonText('Удаление...')
+    setIsLoading(true)
     api.deleteCardFromServer({ cardID: cardToDelete._id })
       .then(() => {
         setCards(
           // создаем копию массива, исключив из него удалённую карточку
           cards.filter(cardElement => cardElement._id !== cardToDelete._id)
-          )
-          closeAllPopups()
+        )
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        setDeleteConfirmButtonText('Да')
+        setIsLoading(false)
       })
   }
 
   // обработчик добавления карточки
   function handleAddPlaceSubmit({ name, url }) {
-    setPlaceButtonText('Сохранение...')
+    setIsLoading(true)
     api.addNewCard({ name: name, url: url })
       .then((res) => {
         // обновляем стейт cards с помощью расширенной копии текущего массива
@@ -155,7 +152,7 @@ function App() {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        setPlaceButtonText('Создать')
+        setIsLoading(false)
       })
   }
 
@@ -204,23 +201,23 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          profileButtonText={profileButtonText} />
+          isLoading={isLoading} />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          avatarButtonText={avatarButtonText} />
+          isLoading={isLoading} />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          placeButtonText={placeButtonText} />
+          isLoading={isLoading} />
         <DeleteConfirmPopup
           isOpen={isDeleteConfirmPopupOpen}
           onClose={closeAllPopups}
           onDeleteCard={handleCardDelete}
           cardToDelete={cardToDelete}
-          deleteConfirmButtonText={deleteConfirmButtonText} />
+          isLoading={isLoading} />
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups} />

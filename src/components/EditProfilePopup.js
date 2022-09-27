@@ -73,7 +73,10 @@ export default function EditProfilePopup(props) {
                 value={description}
             />
             <span className="form__error job-error"></span>
-            <button className="form__submit" type="submit">{props.profileButtonText}</button>
+            <button className="form__submit"
+                type="submit">
+                {props.isLoading ? 'Сохранение...' : 'Сохранить'}
+            </button>
         </PopupWithForm>
     )
 } 

@@ -181,6 +181,23 @@ function App() {
       })
   }, [])
 
+  // обработчик закрытия попапов по нажатию Escape
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) { // навешиваем только при открытии
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">

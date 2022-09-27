@@ -12,7 +12,7 @@ export default function EditProfilePopup(props) {
     useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-    }, [currentUser])
+    }, [currentUser, props.isOpen])
 
     // стейт-переменные значений полей формы
     const [name, setName] = useState('')

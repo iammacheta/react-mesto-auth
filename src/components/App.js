@@ -127,7 +127,7 @@ function App() {
       .then(() => {
         setCards(
           // создаем копию массива, исключив из него удалённую карточку
-          cards.filter(cardElement => cardElement._id !== cardToDelete._id)
+          (state) => state.filter((item) => item._id !== cardToDelete._id)
         )
         closeAllPopups()
       })

@@ -1,7 +1,6 @@
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
@@ -9,6 +8,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteConfirmPopup from './DeleteConfirmPopup';
 
 function App() {
 
@@ -16,6 +16,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isDeleteConfirmPopupOpen, setIsDeleteConfirmPopupOpen] = useState(false)
 
   // Переменная состояния для выбраной карточки
   const [selectedCard, setSelectedCard] = useState({})
@@ -25,6 +26,8 @@ function App() {
 
   // переменная состояния для карточек
   const [cards, setCards] = useState([])
+
+  const [cardToDelete, setCardToDelete] = useState({})
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -39,19 +42,26 @@ function App() {
     setIsEditAvatarPopupOpen(true)
   }
 
+  function handleDeleteClick(card) {
+    setIsDeleteConfirmPopupOpen(true)
+    setCardToDelete(card)
+  }
+
   // Обработчик закрытия всех попапов
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setIsDeleteConfirmPopupOpen(false)
 
-    setSelectedCard('')
+    // сбрасываем выбранные карточки
+    setSelectedCard({})
+    setCardToDelete({})
   }
 
   // Колбек для открытия карточки в фулскрин
   function handleCardClick(card) {
     setSelectedCard(card)
-
   }
 
   function handleUpdateUser({ name, about }) {
@@ -95,18 +105,27 @@ function App() {
             cards.map(
               (cardElement) => cardElement._id === card._id ? newCard : cardElement
             )
-          );
-        });
+          )
+        })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
   }
 
   // обработчик удаления карточки
-  function handleCardDelete(card) {
-    api.deleteCardFromServer({ cardID: card._id })
+  function handleCardDelete(cardToDelete) {
+    api.deleteCardFromServer({ cardID: cardToDelete._id })
       .then(() => {
         setCards(
           // создаем копию массива, исключив из него удалённую карточку
-          cards.filter(cardElement => cardElement._id !== card._id)
+          cards.filter(cardElement => cardElement._id !== cardToDelete._id)
         )
+      })
+      .catch((err) => {
+        console.log(err) // выведем ошибку в консоль
+      })
+      .finally(() => {
+        closeAllPopups()
       })
   }
 
@@ -161,25 +180,15 @@ function App() {
           onCardClickCallback={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleDeleteClick}
         />
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-
-        <PopupWithForm
-          name="delete-confirm"
-          title="Вы уверены?"
-          onClose={closeAllPopups}
-        >
-          <button className="form__submit form__submit_type_delete-confirm" type="submit">Да</button>
-        </PopupWithForm>
-
+        <DeleteConfirmPopup isOpen={isDeleteConfirmPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} cardToDelete={cardToDelete} />
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}

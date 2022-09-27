@@ -200,14 +200,30 @@ function App() {
         <Footer />
         {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} profileButtonText={profileButtonText} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} avatarButtonText={avatarButtonText} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} placeButtonText={placeButtonText} />
-        <DeleteConfirmPopup isOpen={isDeleteConfirmPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} cardToDelete={cardToDelete} deleteConfirmButtonText={deleteConfirmButtonText} />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          profileButtonText={profileButtonText} />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+          avatarButtonText={avatarButtonText} />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+          placeButtonText={placeButtonText} />
+        <DeleteConfirmPopup
+          isOpen={isDeleteConfirmPopupOpen}
+          onClose={closeAllPopups}
+          onDeleteCard={handleCardDelete}
+          cardToDelete={cardToDelete}
+          deleteConfirmButtonText={deleteConfirmButtonText} />
         <ImagePopup
           card={selectedCard}
-          onClose={closeAllPopups}
-        />
+          onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   )

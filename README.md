@@ -19,7 +19,9 @@
 * Работа с API при помощи fetch, использование Promise
 * Create React App
 * Функциональные компоненты
-* Хуки (useState, useEffect)
+* Хуки (useState, useEffect, useContext)
+* Управляемые компоненты <input>
+* Рефы для прямого доступа к DOM-элементу
 
 
 **GH-Pages**

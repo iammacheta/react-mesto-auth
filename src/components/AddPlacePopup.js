@@ -1,7 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PopupWithForm from "./PopupWithForm"
 
 export default function AddPlacePopup(props) {
+
+    //Очищаем инпуты только при открытии
+    useEffect(() => {
+        setName('')
+        setLink('')
+    }, [props.isOpen])
 
     const [name, setName] = useState('')
     const [link, setLink] = useState('')

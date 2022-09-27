@@ -77,12 +77,12 @@ function App() {
       .then((res) => {
         // setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
         setCurrentUser(res)
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        closeAllPopups()
         setProfileButtonText('Сохранить')
       })
   }
@@ -92,12 +92,12 @@ function App() {
     api.updateAvatar({ avatarLink: avatar })
       .then((res) => {
         setCurrentUser(res)
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        closeAllPopups()
         setAvatarButtonText('Сохранить')
       })
   }
@@ -131,13 +131,13 @@ function App() {
         setCards(
           // создаем копию массива, исключив из него удалённую карточку
           cards.filter(cardElement => cardElement._id !== cardToDelete._id)
-        )
+          )
+          closeAllPopups()
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        closeAllPopups()
         setDeleteConfirmButtonText('Да')
       })
   }
@@ -149,12 +149,12 @@ function App() {
       .then((res) => {
         // обновляем стейт cards с помощью расширенной копии текущего массива
         setCards([res, ...cards])
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err) // выведем ошибку в консоль
       })
       .finally(() => {
-        closeAllPopups()
         setPlaceButtonText('Создать')
       })
   }

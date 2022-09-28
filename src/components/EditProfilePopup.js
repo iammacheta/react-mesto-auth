@@ -48,6 +48,7 @@ export default function EditProfilePopup(props) {
             isOpen={props.isOpen} //Видимость попапов задается с помощью соответствующей переменной состояния
             onClose={props.onClose} //коблек для закрытия всех попапов
             onSubmit={handleSubmit}
+            isLoading={props.isLoading}
         >
             <input
                 className="form__input form__input_type_name"
@@ -73,10 +74,6 @@ export default function EditProfilePopup(props) {
                 value={description}
             />
             <span className="form__error job-error" />
-            <button className="form__submit"
-                type="submit">
-                {props.isLoading ? 'Сохранение...' : 'Сохранить'}
-            </button>
         </PopupWithForm>
     )
 } 

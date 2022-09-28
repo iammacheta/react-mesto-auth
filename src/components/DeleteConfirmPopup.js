@@ -14,12 +14,8 @@ export default function DeleteConfirmPopup(props) {
             onClose={props.onClose}
             isOpen={props.isOpen}
             onSubmit={handleSubmit}
+            isLoading={props.isLoading}
         >
-            <button
-                className="form__submit form__submit_type_delete-confirm"
-                type="submit">
-                {props.isLoading ? 'Удаление...' : 'Да'}
-            </button>
         </PopupWithForm>
     )
 }

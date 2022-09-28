@@ -36,6 +36,7 @@ export default function AddPlacePopup(props) {
             isOpen={props.isOpen}
             onClose={props.onClose}
             onSubmit={handleSubmit}
+            isLoading={props.isLoading}
         >
             <input
                 className="form__input form__input_type_card-name"
@@ -59,10 +60,6 @@ export default function AddPlacePopup(props) {
                 onChange={handleChangeLink}
             />
             <span className="form__error link-error" />
-            <button
-                className="form__submit" type="submit">
-                {props.isLoading ? 'Сохранение...' : 'Создать'}
-            </button>
         </PopupWithForm>
     )
 }

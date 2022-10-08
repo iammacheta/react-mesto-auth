@@ -6,6 +6,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback, ca
     // onCardClickCallback - нужен для проброса card из Cards в Арр 
 
     const currentUser = useContext(CurrentUserContext)
+    // const loggedIn = useContext(LoggedInStatus)
 
     return (
         <main>

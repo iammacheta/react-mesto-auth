@@ -5,10 +5,14 @@ import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { LoggedInStatus } from '../contexts/LoggedInStatus';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteConfirmPopup from './DeleteConfirmPopup';
+import ProtectedRoute from './ProtectedRoute';
+
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
 
@@ -23,6 +27,9 @@ function App() {
 
   // Переменная состояния для данных пользователя
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' })
+
+  // Переменная состояния для статуса логина
+  const [loggedIn, setLoggedIn] = useState(true)
 
   // переменная состояния для карточек
   const [cards, setCards] = useState([])
@@ -72,7 +79,6 @@ function App() {
     setIsLoading(true)
     api.updateProfileInfo({ name: name, about: about })
       .then((res) => {
-        // setCurrentUser({ name: res.name, about: res.about, avatar: res.avatar })
         setCurrentUser(res)
         closeAllPopups()
       })
@@ -199,47 +205,64 @@ function App() {
   }, [isOpen])
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="App">
-        <Header />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClickCallback={handleCardClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleDeleteClick}
-        />
-        <Footer />
-        {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
+    <BrowserRouter>
+      <CurrentUserContext.Provider value={currentUser}>
+        <LoggedInStatus.Provider value={loggedIn}>
+          <div className="App">
+            <Header />
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          isLoading={isLoading} />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-          isLoading={isLoading} />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-          isLoading={isLoading} />
-        <DeleteConfirmPopup
-          isOpen={isDeleteConfirmPopupOpen}
-          onClose={closeAllPopups}
-          onDeleteCard={handleCardDelete}
-          cardToDelete={cardToDelete}
-          isLoading={isLoading} />
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups} />
-      </div>
-    </CurrentUserContext.Provider>
+            {/* <Route path="/sign-up">
+            <Register />
+          </Route>
+          <Route path="/sign-in">
+            <Login />
+          </Route> */}
+            <Switch>
+              <ProtectedRoute
+                exact path="/"
+                loggedIn={loggedIn}
+                component={Main}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClickCallback={handleCardClick}
+                cards={cards}
+                onCardLike={handleCardLike}
+                onCardDelete={handleDeleteClick}
+              />
+            </Switch>
+
+            <Footer />
+            {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
+
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+              isLoading={isLoading} />
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+              isLoading={isLoading} />
+            <AddPlacePopup
+              isOpen={isAddPlacePopupOpen}
+              onClose={closeAllPopups}
+              onAddPlace={handleAddPlaceSubmit}
+              isLoading={isLoading} />
+            <DeleteConfirmPopup
+              isOpen={isDeleteConfirmPopupOpen}
+              onClose={closeAllPopups}
+              onDeleteCard={handleCardDelete}
+              cardToDelete={cardToDelete}
+              isLoading={isLoading} />
+            <ImagePopup
+              card={selectedCard}
+              onClose={closeAllPopups} />
+          </div>
+        </LoggedInStatus.Provider>
+      </CurrentUserContext.Provider>
+    </BrowserRouter>
   )
 }
 

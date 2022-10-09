@@ -1,8 +1,6 @@
 import PopupWithForm from "./PopupWithForm"
 
-export default function InfoTooltip({ isOpen, onClose }) {
-
-    let regStatus = false
+export default function InfoTooltip({ isOpen, onClose, regStatus }) {
 
     let title = `Что-то пошло не так!
     Попробуйте ещё раз.`

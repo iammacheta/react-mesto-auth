@@ -1,4 +1,11 @@
 export default function Login() {
+
+    const [credentials, setCredentials] = {
+        email: '',
+        password: ''
+    }
+
+
     return (
         <div className="form__container">
             <form className="form" name="login">

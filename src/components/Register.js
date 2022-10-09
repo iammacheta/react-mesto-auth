@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom"
 
 export default function Register() {
+
+    const [credentials, setCredentials] = useState({
+        email: '',
+        password: ''
+    })
+
     return (
         <div className="form__container">
             <form className="form" name="login">

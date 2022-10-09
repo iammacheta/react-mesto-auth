@@ -27,7 +27,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isDeleteConfirmPopupOpen, setIsDeleteConfirmPopupOpen] = useState(false)
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
 
   // Переменная состояния для выбраной карточки
   const [selectedCard, setSelectedCard] = useState({})
@@ -36,7 +36,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' })
 
   // Переменная состояния для статуса логина
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   // переменная состояния для карточек
   const [cards, setCards] = useState([])
@@ -46,6 +46,8 @@ function App() {
 
   // переменная состояния, отвечающая за текст кнопок в формах
   const [isLoading, setIsLoading] = useState(false)
+
+  const [email, setEmail] = useState('')
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -168,6 +170,18 @@ function App() {
       .finally(() => {
         setIsLoading(false)
       })
+  }
+
+  function handleRegister() {
+
+  }
+
+  function handleLogin() {
+
+  }
+
+  function handleSignOut() {
+
   }
 
   // эффект, вызываемый при монтировании компонента

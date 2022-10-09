@@ -11,6 +11,8 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeleteConfirmPopup from './DeleteConfirmPopup';
 import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
+import Register from './Register';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -210,14 +212,14 @@ function App() {
         <LoggedInStatus.Provider value={loggedIn}>
           <div className="App">
             <Header />
-
-            {/* <Route path="/sign-up">
-            <Register />
-          </Route>
-          <Route path="/sign-in">
-            <Login />
-          </Route> */}
             <Switch>
+              <Route exact path="/sign-up">
+                <Register />
+              </Route>
+              <Route exact path="/sign-in">
+                <Login />
+              </Route>
+
               <ProtectedRoute
                 exact path="/"
                 loggedIn={loggedIn}
@@ -230,6 +232,10 @@ function App() {
                 onCardLike={handleCardLike}
                 onCardDelete={handleDeleteClick}
               />
+
+              <Route>
+                {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+              </Route>
             </Switch>
 
             <Footer />

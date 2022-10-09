@@ -1,0 +1,16 @@
+.form__input_type_sign {
+    background: black;
+    border-bottom: 2px solid #ccc;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 33px;
+    color: #ccc;
+}
+
+.form__input_type_sign:focus {
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 33px;
+}

@@ -3,6 +3,9 @@
 @import url(./blocks/root/root.css);
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/header/__nav/header__nav.css);
+@import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/header/__email/header__email.css);
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/profile/__image/profile__image.css);
 @import url(./blocks/profile/__name/profile__name.css);
@@ -30,11 +33,17 @@
 @import url(./blocks/popup/__image/popup__image.css);
 @import url(./blocks/popup/__caption/popup__caption.css);
 @import url(./blocks/form/__title/form__title.css);
+@import url(./blocks/form/__title/_type/form__title_type_sign.css);
 @import url(./blocks/form/__input/form__input.css);
 @import url(./blocks/form/__input/_type/form__input_type_error.css);
 @import url(./blocks/form/__input/_type/form__input_type_update-avatar.css);
+@import url(./blocks/form/__input/_type/form__input_type_sign.css);
 @import url(./blocks/form/__submit/popup__submit.css);
+@import url(./blocks/form/__submit/_type/form__submit_type_sign.css);
 @import url(./blocks/form/__submit/_disabled/form__submit_disabled.css);
 @import url(./blocks/form/__submit/_type/form__submit_type_delete-confirm.css);
 @import url(./blocks/form/__error/form__error.css);
 @import url(./blocks/form/__error/_visible/form__error_visible.css);
+@import url(./blocks/form/__container/form__container.css);
+@import url(./blocks/form/__sign-in-text/form__sign-in-text.css);
+@import url(./blocks/form/__sign-in-link/form__sign-in-link.css);

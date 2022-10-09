@@ -13,16 +13,21 @@ import DeleteConfirmPopup from './DeleteConfirmPopup';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
+
+
+  const regStatus = true
 
   // Переменные состояния, отвечающие за видимость попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isDeleteConfirmPopupOpen, setIsDeleteConfirmPopupOpen] = useState(false)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true)
 
   // Переменная состояния для выбраной карточки
   const [selectedCard, setSelectedCard] = useState({})
@@ -66,6 +71,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsDeleteConfirmPopupOpen(false)
+    setIsInfoTooltipOpen(false)
 
     // сбрасываем выбранные карточки
     setSelectedCard({})
@@ -265,6 +271,11 @@ function App() {
             <ImagePopup
               card={selectedCard}
               onClose={closeAllPopups} />
+
+            <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              regStatus={regStatus} />
           </div>
         </LoggedInStatus.Provider>
       </CurrentUserContext.Provider>

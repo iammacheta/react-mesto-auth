@@ -32,8 +32,11 @@
 @import url(./blocks/popup/__fullscreen/popup__fullscreen.css);
 @import url(./blocks/popup/__image/popup__image.css);
 @import url(./blocks/popup/__caption/popup__caption.css);
+@import url('./blocks/popup/__registration-badge/popup__registration-badge.css');
+@import url('./blocks/popup/__registration-badge/_err/popup__registration-badge_err.css');
 @import url(./blocks/form/__title/form__title.css);
 @import url(./blocks/form/__title/_type/form__title_type_sign.css);
+@import url(./blocks/form/__title/_type/form__title_type_registration.css);
 @import url(./blocks/form/__input/form__input.css);
 @import url(./blocks/form/__input/_type/form__input_type_error.css);
 @import url(./blocks/form/__input/_type/form__input_type_update-avatar.css);

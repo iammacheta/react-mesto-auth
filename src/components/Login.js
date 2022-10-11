@@ -1,10 +1,11 @@
+import { useState } from "react"
+
 export default function Login() {
 
-    const [credentials, setCredentials] = {
+    const [credentials, setCredentials] = useState({
         email: '',
         password: ''
-    }
-
+    })
 
     return (
         <div className="form__container">

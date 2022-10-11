@@ -4,6 +4,7 @@ import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import { useState, useEffect } from 'react';
 import { api } from '../utils/api';
+import * as auth from '../utils/auth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { LoggedInStatus } from '../contexts/LoggedInStatus';
 import EditProfilePopup from './EditProfilePopup';
@@ -15,10 +16,11 @@ import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
 
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 function App() {
 
+  let history = useHistory()
 
   const regStatus = true
 
@@ -172,8 +174,18 @@ function App() {
       })
   }
 
-  function handleRegister() {
-
+  //обработчик регистрации пользователя
+  function handleRegister(credentials) {
+    auth.register(credentials)
+      .then((res) => {
+        // добавляем токен в локальное хранилище
+        localStorage.setItem('token', res.data._id)
+        // перенапрвляем пользователя на главную страницу
+        history.push("/")
+      })
+      .catch((e) => {
+        return ("Возникла ошибка при попытке регистрации")
+      })
   }
 
   function handleLogin() {
@@ -234,7 +246,7 @@ function App() {
             <Header />
             <Switch>
               <Route exact path="/sign-up">
-                <Register />
+                <Register onSubmit={handleRegister} />
               </Route>
               <Route exact path="/sign-in">
                 <Login />

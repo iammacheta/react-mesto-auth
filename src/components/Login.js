@@ -1,15 +1,28 @@
 import { useState } from "react"
 
-export default function Login() {
+export default function Login({ onSubmit }) {
 
     const [credentials, setCredentials] = useState({
-        email: '',
-        password: ''
+        password: '',
+        email: ''
     })
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setCredentials({
+            ...credentials,
+            [name]: value
+        })
+    }
+
+    function handleLogin(e) {
+        e.preventDefault()
+        // onSubmit(credentials)
+    }
 
     return (
         <div className="form__container">
-            <form className="form" name="login">
+            <form className="form" name="login" onSubmit={handleLogin}>
                 <h3 className="form__title form__title_type_sign">Вход</h3>
 
                 <input
@@ -20,8 +33,8 @@ export default function Login() {
                     required
                     minLength="2"
                     maxLength="30"
-                // value={name}
-                // onChange={handleChangeName}
+                    value={credentials.email}
+                    onChange={handleChange}
                 />
                 <span className="form__error name-error" />
                 <input
@@ -30,8 +43,8 @@ export default function Login() {
                     name="password"
                     placeholder="Пароль"
                     required
-                // value={link}
-                // onChange={handleChangeLink}
+                    value={credentials.password}
+                    onChange={handleChange}
                 />
                 <span className="form__error link-error" />
 

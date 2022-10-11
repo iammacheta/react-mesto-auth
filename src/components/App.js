@@ -22,7 +22,7 @@ function App() {
 
   let history = useHistory()
 
-  const regStatus = true
+
 
   // Переменные состояния, отвечающие за видимость попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
@@ -49,7 +49,11 @@ function App() {
   // переменная состояния, отвечающая за текст кнопок в формах
   const [isLoading, setIsLoading] = useState(false)
 
+  // переменная состояния для отображения email в кабинете
   const [email, setEmail] = useState('')
+
+  // переменная состояния для статуса ответа при попытке регистрации
+  const [regStatus, setRegStatus] = useState(false)
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -75,11 +79,19 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsDeleteConfirmPopupOpen(false)
-    setIsInfoTooltipOpen(false)
-
     // сбрасываем выбранные карточки
     setSelectedCard({})
     setCardToDelete({})
+  }
+
+  //Обработчик закрытия попапа упешной регистрации
+  function closeInfoTooltip() {
+    // закрываем попап
+    setIsInfoTooltipOpen(false)
+    if (regStatus) {
+      // перенапрвляем пользователя на страницу входа, если регистрация успешная. Если нет оставляем для повторной попытки
+      history.push("/sign-in")
+    }
   }
 
   // Колбек для открытия карточки в фулскрин
@@ -180,11 +192,12 @@ function App() {
       .then((res) => {
         // добавляем токен в локальное хранилище
         localStorage.setItem('token', res.data._id)
-        // перенапрвляем пользователя на главную страницу
-        history.push("/")
+        setRegStatus(true)
+        setIsInfoTooltipOpen(true)
       })
       .catch((e) => {
-        return ("Возникла ошибка при попытке регистрации")
+        setRegStatus(false)
+        setIsInfoTooltipOpen(true)
       })
   }
 
@@ -300,7 +313,7 @@ function App() {
 
             <InfoTooltip
               isOpen={isInfoTooltipOpen}
-              onClose={closeAllPopups}
+              onClose={closeInfoTooltip}
               regStatus={regStatus} />
           </div>
         </LoggedInStatus.Provider>

@@ -5,17 +5,15 @@ import { LoggedInStatus } from "../contexts/LoggedInStatus"
 
 // этот компонент принимает другой компонент в качестве пропса component
 // он также может взять неограниченное число пропсов ...props и передать их новому компоненту 
-const ProtectedRoute = ({ component: Component, ...props }) => {
+const ProtectedRoute = ({ path, children }) => {
 
     const loggedIn = useContext(LoggedInStatus)
-    
+
     return (
-        <Route>
-            {() =>
-                loggedIn ? <Component {...props} /> : <Redirect to="./sign-in" />
-            }
+        <Route path={path}>
+            {loggedIn ? children : <Redirect to="/sign-in" />}
         </Route>
     )
 }
 
-export default ProtectedRoute
+export default ProtectedRoute 

@@ -299,22 +299,26 @@ function App() {
             </Route>
             <ProtectedRoute
               exact path="/"
-              component={Main}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClickCallback={handleCardClick}
-              cards={cards}
-              onCardLike={handleCardLike}
-              onCardDelete={handleDeleteClick}
-            />
+            >
+              <Main
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClickCallback={handleCardClick}
+                cards={cards}
+                onCardLike={handleCardLike}
+                onCardDelete={handleDeleteClick}
+              />
+              <Footer />
+            </ProtectedRoute>
+
             {/* В остальных случаях редиректим в зависимости от статуса лог-ина */}
             <Route>
               {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
             </Route>
           </Switch>
 
-          <Footer />
+          {/* <Footer /> */}
           {/* Добавляю компонент попапов с children кодом внутри. Общая разметка, отличия приходят в компонент через children */}
 
           <EditProfilePopup

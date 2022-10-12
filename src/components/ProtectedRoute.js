@@ -9,7 +9,6 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
 
     const loggedIn = useContext(LoggedInStatus)
     
-
     return (
         <Route>
             {() =>

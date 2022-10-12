@@ -1,12 +1,12 @@
 import logo from '../images/logo.svg';
 import Navigation from './Navigation';
 
-function Header() {
+function Header({ onClick, email }) {
 
     return (
         <header className="header">
             <img src={logo} alt="логотип" className="header__logo" />
-            <Navigation />
+            <Navigation onClick={onClick} email={email} />
         </header>
     )
 }

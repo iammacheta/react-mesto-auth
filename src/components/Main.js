@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import Card from "./Card"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import Card from "./Card"
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClickCallback, cards, onCardLike, onCardDelete }) {
     // onCardClickCallback - нужен для проброса card из Cards в Арр 

@@ -34,4 +34,21 @@ function authorize(credentials) {
     })
 }
 
-export { register, authorize }
+function tokenVerification(token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`)
+    })
+}
+
+export { register, authorize, tokenVerification }

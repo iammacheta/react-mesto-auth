@@ -1,11 +1,8 @@
-import { Link } from "react-router-dom"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
-export default function Navigation() {
+export default function Navigation({ onClick, email }) {
 
     const { pathname } = useLocation()
-
-    const email = "email@mail.com" //тут нужно будет прокидывать данные пользователя и забирать из них почту
 
     let data = {
         url: "/sign-in",
@@ -25,8 +22,7 @@ export default function Navigation() {
     return (
         <div className="header__nav">
             {data.email && <span className="header__email">{email}</span>}
-            <Link to={data.url} className="header__link">{data.text}</Link>
-
-        </div>
+            <Link to={data.url} className="header__link" onClick={onClick}>{data.text} </Link>
+        </div >
     )
 }

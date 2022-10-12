@@ -8,7 +8,6 @@ export default function EditAvatarPopup(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-
         props.onUpdateAvatar({
             avatar: avatarRef.current.value // Значение инпута, полученное с помощью рефа
         });

@@ -37,7 +37,7 @@ function App() {
   // Переменная состояния для данных пользователя
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' })
 
-  // Переменная состояния для статуса логина
+  //переменная состояния статуса авторизации
   const [loggedIn, setLoggedIn] = useState(false)
 
   // переменная состояния для карточек
@@ -53,7 +53,7 @@ function App() {
   const [email, setEmail] = useState('')
 
   // переменная состояния для статуса ответа при попытке регистрации
-  const [regStatus, setRegStatus] = useState(false)
+  const [authStatus, setAuthStatus] = useState(false)
 
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
@@ -88,9 +88,9 @@ function App() {
   function closeInfoTooltip() {
     // закрываем попап
     setIsInfoTooltipOpen(false)
-    if (regStatus) {
-      // перенапрвляем пользователя на страницу входа, если регистрация успешная. Если нет оставляем для повторной попытки
-      history.push("/sign-in")
+    if (authStatus) {
+      // перенаправляем пользователя со страницы регистрации на страницу входа, а со страницы входа на главную.
+      history.push(loggedIn ? "/" : "/sign-in") //тут выпилить для случая авторизации (только регистрацию оставить)
     }
   }
 
@@ -189,24 +189,37 @@ function App() {
   //обработчик регистрации пользователя
   function handleRegister(credentials) {
     auth.register(credentials)
-      .then((res) => {
-        // добавляем токен в локальное хранилище
-        localStorage.setItem('token', res.data._id)
-        setRegStatus(true)
+      .then(() => {
+        setAuthStatus(true)
         setIsInfoTooltipOpen(true)
       })
-      .catch((e) => {
-        setRegStatus(false)
+      .catch(() => {
+        setAuthStatus(false)
         setIsInfoTooltipOpen(true)
       })
   }
 
-  function handleLogin() {
-
+  function handleAuthorize(credentials) {
+    auth.authorize(credentials)
+      .then((res) => {
+        if (res.token) { //проверяем, есть ли в ответе токен. Елси да, значит успешно авторизовались
+          // добавляем токен в локальное хранилище
+          localStorage.setItem('token', res.token)
+          handleLogin()
+          history.push("/")
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function handleSignOut() {
 
+  }
+
+  function handleLogin() {
+    setLoggedIn(true)
   }
 
   // эффект, вызываемый при монтировании компонента
@@ -262,12 +275,12 @@ function App() {
                 <Register onSubmit={handleRegister} />
               </Route>
               <Route exact path="/sign-in">
-                <Login />
+                <Login onSubmit={handleAuthorize} />
               </Route>
 
               <ProtectedRoute
                 exact path="/"
-                loggedIn={loggedIn}
+                // loggedIn={loggedIn}
                 component={Main}
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -314,7 +327,7 @@ function App() {
             <InfoTooltip
               isOpen={isInfoTooltipOpen}
               onClose={closeInfoTooltip}
-              regStatus={regStatus} />
+              authStatus={authStatus} />
           </div>
         </LoggedInStatus.Provider>
       </CurrentUserContext.Provider>

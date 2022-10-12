@@ -17,7 +17,7 @@ export default function Login({ onSubmit }) {
 
     function handleLogin(e) {
         e.preventDefault()
-        // onSubmit(credentials)
+        onSubmit(credentials)
     }
 
     return (

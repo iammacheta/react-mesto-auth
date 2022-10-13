@@ -24,7 +24,7 @@ export default function Register({ onSubmit }) {
     return (
         <div className="form__container">
             <form className="form" name="login" onSubmit={handleRegister}>
-                <h3 className="form__title form__title_type_sign">Вход</h3>
+                <h3 className="form__title form__title_type_sign">Регистрация</h3>
                 <input
                     className="form__input form__input_type_sign"
                     type="email"

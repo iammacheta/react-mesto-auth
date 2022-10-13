@@ -4,5 +4,12 @@
     height: 120px;
     background-size: contain;
     background-repeat: no-repeat;
-    margin: 24px auto 32px auto;
+    margin: 25px auto 32px auto;
+    padding-bottom: 8px;
+}
+
+@media screen and (min-width: 920px) {
+    .popup__registration-badge {
+        padding-bottom: 0px;
+    }
 }

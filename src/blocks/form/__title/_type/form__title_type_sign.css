@@ -1,5 +1,19 @@
 .form__title_type_sign {
     color: #fff;
     text-align: center;
-    margin-top: 20px;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    margin-top: -2px;
+    margin-bottom: 30px;
+}
+
+@media screen and (min-width: 920px) {
+    .form__title_type_sign {
+        margin-top: 19px;
+        margin-bottom: 42px;
+        font-size: 24px;
+        line-height: 29px;
+    }
 }

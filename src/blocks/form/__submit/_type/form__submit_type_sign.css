@@ -1,5 +1,16 @@
 .form__submit_type_sign {
-    margin-top: 217px;
+    margin-top: 174px;
     background: #fff;
     color: #000;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+@media screen and (min-width: 920px) {
+    .form__submit_type_sign {
+        margin-top: 215px;
+        font-size: 18px;
+        line-height: 22px;
+    }
 }

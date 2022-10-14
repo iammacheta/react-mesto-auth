@@ -1,0 +1,16 @@
+.header__open-nav-button {
+    background-image: url(/src/images/header__open-nav-button.svg);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+}
+
+@media screen and (min-width: 920px) {
+    .header__open-nav-button {
+        display: none;
+        width: 24px;
+        height: 24px;
+    }
+}

@@ -1,0 +1,17 @@
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    height: 83px;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 30px;
+} 
+
+@media screen and (min-width: 920px) {
+    .header__container {
+        height: 115px ;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+}

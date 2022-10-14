@@ -1,0 +1,20 @@
+.header__sign-button {
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header__sign-button:hover {
+    opacity: 0.6;
+}
+
+@media screen and (min-width: 920px) {
+    .header__sign-button {
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: 9px;
+    }
+}

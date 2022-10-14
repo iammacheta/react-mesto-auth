@@ -1,16 +1,16 @@
 .header {
-    margin-top: 28px;
-    margin-bottom: 42px;
-    padding-bottom: 31px;
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 41px;
     border-bottom: 1px solid #545454b3;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
 }
 
 @media screen and (min-width: 920px) {
     .header {
-        padding-bottom: 40px;
         max-width: 880px;
-        margin: 46px auto 40px auto;
+        margin: 0 auto 41px auto;
+        height: 119px;
+        flex-direction: row;
     }
 }

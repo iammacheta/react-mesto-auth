@@ -1,0 +1,9 @@
+.header__nav_closed {
+    display: none;
+}
+
+@media screen and (min-width: 920px) {
+    .header__nav_closed {
+        display: flex;
+    }
+}

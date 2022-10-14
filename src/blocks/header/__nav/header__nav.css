@@ -1,4 +1,19 @@
 .header__nav {
     display: flex;
-    gap: 24px;
+    margin: 0 auto;
+    border-bottom: 1px solid #545454b3;
+    width: 100%;
+    padding-bottom: 38px;
+    flex-direction: column;
+    align-items: center;    
+}
+
+@media screen and (min-width: 920px) {
+    .header__nav {
+        gap: 24px;
+        flex-direction: row;
+        justify-content: flex-end;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 }

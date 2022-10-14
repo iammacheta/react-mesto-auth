@@ -1,28 +1,19 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
+import { useRouteMatch } from "react-router-dom"
 
-export default function Navigation({ onClick, email }) {
+export default function Navigation({ onClickLogout, email, menuIsOpened }) {
 
-    const { pathname } = useLocation()
-
-    let data = {
-        url: "/sign-in",
-        text: "Выйти",
-        email: false
-    }
-
-    if (pathname === "/sign-in") {
-        data.url = "sign-up"
-        data.text = "Регистрация"
-    } else if (pathname === "/sign-up") {
-        data.text = "Войти"
-    } else {
-        data.email = true
-    }
+    const matchSignup = useRouteMatch('/sign-up')
+    const matchSignin = useRouteMatch('/sign-in')
 
     return (
-        <div className="header__nav">
-            {data.email && <span className="header__email">{email}</span>}
-            <Link to={data.url} className="header__link" onClick={onClick}>{data.text} </Link>
-        </div >
+        <>
+            {!(matchSignup || matchSignin) &&
+                <div className={menuIsOpened ? 'header__nav' : 'header__nav header__nav_closed'}>
+                    <span className="header__email">{email}</span>
+                    <Link to={"/sign-in"} className="header__link" onClick={onClickLogout}>Выйти</Link>
+                </div >}
+        </>
+
     )
 }

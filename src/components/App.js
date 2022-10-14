@@ -53,6 +53,9 @@ function App() {
   // переменная состояния для статуса ответа при попытке регистрации (управляет содержанием попапа)
   const [registrationStatus, setregistrationStatus] = useState(false)
 
+  //Переменная состояния бургера меню в моб.вебе
+  const [menuIsOpened, setMenuIsOpened] = useState(false)
+
   // Обработчики событий для открытия попапов (при клике на кнопку)
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -226,7 +229,14 @@ function App() {
       localStorage.removeItem('token')
       // Разлогиниваем
       setLoggedIn(false)
+      //Убираем меню с email
+      setMenuIsOpened(false)
     }
+   
+  }
+
+  function handleClickMenu() {
+    setMenuIsOpened(!menuIsOpened)
   }
 
   // эффект, вызываемый при монтировании компонента
@@ -289,7 +299,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <LoggedInStatus.Provider value={loggedIn}>
         <div className="App">
-          <Header onClick={handleLogout} email={email} />
+          <Header onClickLogout={handleLogout} onClickMenu={handleClickMenu} email={email} menuIsOpened={menuIsOpened} />
           <Switch>
             <Route exact path="/sign-up">
               <Register onSubmit={handleRegister} />

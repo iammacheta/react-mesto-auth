@@ -22,7 +22,11 @@
 * Хуки (useState, useEffect, useContext)
 * Управляемые компоненты <input>
 * Рефы для прямого доступа к DOM-элементу
+* Переадресация
+* Защищенный роут
+* Аутентификация с помощью JWT
+* LocalStorage
 
 
 **GH-Pages**
-https://iammacheta.github.io/mesto-react/
+https://iammacheta.github.io/mesto-react-auth/

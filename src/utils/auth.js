@@ -1,12 +1,21 @@
 import { BASE_URL } from '../utils/constants'
 
-function register(credentials) {
-  return fetch(`${BASE_URL}/signup`, {
-    method: 'POST',
+//  Универсальная обработка запроса
+function request({
+  END_POINT,
+  method = 'POST',
+  token,
+  credentials
+}) {
+  return fetch(`${BASE_URL}${END_POINT}`, {
+    method,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      // Раскладываем ключ-значение, только если токен существует
+      ...!!token && { "Authorization": `Bearer ${token}` }
     },
-    body: JSON.stringify(credentials)
+    // Раскладываем ключ-значение, только если данные для входа существуют
+    ...!!credentials && { body: JSON.stringify(credentials) }
   })
     .then((res) => {
       if (res.ok) {
@@ -17,38 +26,27 @@ function register(credentials) {
     })
 }
 
-function authorize(credentials) {
-  return fetch(`${BASE_URL}/signin`, {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(credentials)
+function register(credentials) {
+  return request({
+    END_POINT: '/signup',
+    credentials
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`)
-    })
+}
+
+
+function authorize(credentials) {
+  return request({
+    END_POINT: '/signin',
+    credentials
+  })
 }
 
 function tokenVerification(token) {
-  return fetch(`${BASE_URL}/users/me`, {
+  return request({
+    END_POINT: '/users/me',
     method: 'GET',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    }
+    token
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`)
-    })
 }
 
 export { register, authorize, tokenVerification }

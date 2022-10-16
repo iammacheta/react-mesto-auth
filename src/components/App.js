@@ -51,7 +51,10 @@ function App() {
   const [email, setEmail] = useState('')
 
   // переменная состояния для статуса ответа при попытке регистрации (управляет содержанием попапа)
-  const [registrationStatus, setregistrationStatus] = useState(false)
+  const [infoTooltipType, setInfoTooltipType] = useState(false)
+
+  // переменная состояния для текста попапа
+  const [infoTooltipText, setInfoTooltipText] = useState('')
 
   //Переменная состояния бургера меню в моб.вебе
   const [menuIsOpened, setMenuIsOpened] = useState(false)
@@ -90,7 +93,7 @@ function App() {
   function closeInfoTooltip() {
     // закрываем попап
     setIsInfoTooltipOpen(false)
-    if (registrationStatus) { // проверяем, получилось ли зарегистироваться
+    if (infoTooltipType) { // проверяем, получилось ли зарегистироваться
       // перенаправляем пользователя со страницы регистрации на страницу входа
       history.push("/sign-in")
     }
@@ -193,11 +196,14 @@ function App() {
   function handleRegister(credentials) {
     auth.register(credentials)
       .then(() => {
-        setregistrationStatus(true)
+        setInfoTooltipType(true)
+        setInfoTooltipText('Вы успешно зарегистрировались!')
         setIsInfoTooltipOpen(true)
       })
       .catch(() => {
-        setregistrationStatus(false)
+        setInfoTooltipType(false)
+        setInfoTooltipText(`Что-то пошло не так!
+        Попробуйте ещё раз.`)
         setIsInfoTooltipOpen(true)
       })
   }
@@ -232,7 +238,7 @@ function App() {
       //Убираем меню с email
       setMenuIsOpened(false)
     }
-   
+
   }
 
   function handleClickMenu() {
@@ -359,7 +365,8 @@ function App() {
           <InfoTooltip
             isOpen={isInfoTooltipOpen}
             onClose={closeInfoTooltip}
-            registrationStatus={registrationStatus} />
+            infoTooltipType={infoTooltipType}
+            infoTooltipText={infoTooltipText} />
         </div>
       </LoggedInStatus.Provider>
     </CurrentUserContext.Provider>

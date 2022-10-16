@@ -24,9 +24,9 @@
 * Рефы для прямого доступа к DOM-элементу
 * Переадресация
 * Защищенный роут
-* Аутентификация с помощью JWT
+* Авторизация с помощью JWT
 * LocalStorage
 
 
 **GH-Pages**
-https://iammacheta.github.io/mesto-react-auth/
+https://iammacheta.github.io/react-mesto-auth

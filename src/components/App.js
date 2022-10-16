@@ -221,7 +221,10 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err)
+        setInfoTooltipType(false)
+        setInfoTooltipText(`Что-то пошло не так!
+        Попробуйте ещё раз.`)
+        setIsInfoTooltipOpen(true)
       })
   }
 

@@ -268,7 +268,7 @@ function App() {
       api.getInitialCards()
         .then((res) => {
           // передаем карточки в переменную состояни
-          setCards(res.data)
+          setCards(res.data.reverse())
         })
         .catch((err) => {
           console.log(err) // выведем ошибку в консоль

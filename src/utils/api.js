@@ -1,5 +1,3 @@
-import { token } from "./constants"
-
 class Api {
     constructor({ baseUrl, headers }) {
         this._baseUrl = baseUrl
@@ -49,6 +47,7 @@ class Api {
         })
             .then((res) => {
                 return this._getResponseData(res)
+
             })
     }
 
@@ -80,6 +79,7 @@ class Api {
                 .then((res) => {
 
                     return this._getResponseData(res)
+                    
                 })
         }
     }
@@ -110,9 +110,9 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-48',
+    baseUrl: 'https://mesto.back.ichetovkin.nomoredomains.club',
     headers: {
-        authorization: token,
+        authorization: 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
     }
 })

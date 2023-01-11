@@ -50,7 +50,7 @@ export default function Register({ onSubmit }) {
                 className="form__submit form__submit_type_sign" type="submit">
                 Зарегистрироваться
             </button>
-            <p className="form__sign-in-text">Уже зарегистрированы? <Link to="/sign-in" className="form__sign-in-link">Войти</Link></p>
+            <p className="form__sign-in-text">Уже зарегистрированы? <Link to="/signin" className="form__sign-in-link">Войти</Link></p>
 
         </form>
     )

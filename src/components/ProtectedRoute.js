@@ -11,7 +11,7 @@ const ProtectedRoute = ({ path, children }) => {
 
     return (
         <Route path={path}>
-            {loggedIn ? children : <Redirect to="/sign-in" />}
+            {loggedIn ? children : <Redirect to="/signin" />}
         </Route>
     )
 }

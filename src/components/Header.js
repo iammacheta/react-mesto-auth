@@ -9,15 +9,15 @@ import { Link } from 'react-router-dom';
 
 function Header({ onClickLogout, onClickMenu, email, menuIsOpened }) {
 
-    const matchSignup = useRouteMatch('/sign-up')
-    const matchSignin = useRouteMatch('/sign-in')
+    const matchSignup = useRouteMatch('/signup')
+    const matchSignin = useRouteMatch('/signin')
 
     return (
         <header className="header">
             <div className="header__container">
                 <img src={logo} alt="логотип" className="header__logo" />
-                {matchSignin && <Link to={"/sign-up"} className="header__sign-button">Регистрация</Link>}
-                {matchSignup && <Link to={"/sign-in"} className="header__sign-button">Войти</Link>}
+                {matchSignin && <Link to={"/signup"} className="header__sign-button">Регистрация</Link>}
+                {matchSignup && <Link to={"/signin"} className="header__sign-button">Войти</Link>}
                 <button
                     className={(matchSignup || matchSignin) ? 'header__open-nav-button header__open-nav-button_closed' : 'header__open-nav-button'}
                     type='button' onClick={onClickMenu}

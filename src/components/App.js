@@ -95,7 +95,7 @@ function App() {
     setIsInfoTooltipOpen(false)
     if (infoTooltipType) { // проверяем, получилось ли зарегистироваться
       // перенаправляем пользователя со страницы регистрации на страницу входа
-      history.push("/sign-in")
+      history.push("/signin")
     }
   }
 
@@ -109,7 +109,7 @@ function App() {
     setIsLoading(true)
     api.updateProfileInfo({ name: name, about: about })
       .then((res) => {
-        setCurrentUser(res)
+        setCurrentUser(res.data)
         closeAllPopups()
       })
       .catch((err) => {
@@ -125,7 +125,7 @@ function App() {
     setIsLoading(true)
     api.updateAvatar({ avatarLink: avatar })
       .then((res) => {
-        setCurrentUser(res)
+        setCurrentUser(res.data)
         closeAllPopups()
       })
       .catch((err) => {
@@ -147,7 +147,7 @@ function App() {
           setCards(
             // создаем копию массива, заменив в нем измененную карточку
             cards.map(
-              (cardElement) => cardElement._id === card._id ? newCard : cardElement
+              (cardElement) => cardElement._id === card._id ? newCard.data : cardElement
             )
           )
         })
@@ -181,7 +181,7 @@ function App() {
     api.addNewCard(cardInfo)
       .then((res) => {
         // обновляем стейт cards с помощью расширенной копии текущего массива
-        setCards([res, ...cards])
+        setCards([res.data, ...cards])
         closeAllPopups()
       })
       .catch((err) => {
@@ -258,7 +258,7 @@ function App() {
       api.getProfileInfo()
         .then((res) => {
           // После получения ответа задаем полученные данные в соответствующие переменные состояния
-          setCurrentUser(res)
+          setCurrentUser(res.data)
         })
         .catch((err) => {
           console.log(err) // выведем ошибку в консоль
@@ -268,7 +268,7 @@ function App() {
       api.getInitialCards()
         .then((res) => {
           // передаем карточки в переменную состояни
-          setCards(res)
+          setCards(res.data)
         })
         .catch((err) => {
           console.log(err) // выведем ошибку в консоль
@@ -316,10 +316,10 @@ function App() {
         <div className="App">
           <Header onClickLogout={handleLogout} onClickMenu={handleClickMenu} email={email} menuIsOpened={menuIsOpened} />
           <Switch>
-            <Route exact path="/sign-up">
+            <Route exact path="/signup">
               <Register onSubmit={handleRegister} />
             </Route>
-            <Route exact path="/sign-in">
+            <Route exact path="/signin">
               <Login onSubmit={handleAuthorize} />
             </Route>
             <ProtectedRoute
@@ -339,7 +339,7 @@ function App() {
 
             {/* В остальных случаях редиректим в зависимости от статуса лог-ина */}
             <Route>
-              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
             </Route>
           </Switch>
 

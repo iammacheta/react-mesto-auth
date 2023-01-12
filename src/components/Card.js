@@ -8,16 +8,14 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     // подписываемся на контекст
     const currentUser = useContext(CurrentUserContext)
 
-    // Определяем, являемся ли мы владельцем текущей карточки
-    
-    const isOwn = card.owner._id === currentUser._id;
-    
+    // Определяем, являемся ли мы владельцем текущей карточки    
+    const isOwn = card.owner === currentUser._id || card.owner._id === currentUser._id;
 
     // Создаём переменную, которую после зададим в `className` для кнопки удаления
     const cardDeleteButtonClassName = (
         `gallery__delete ${!isOwn && 'gallery__delete_hidden'}`
     );
-
+    
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
